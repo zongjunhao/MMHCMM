@@ -10,7 +10,7 @@ mutate_rate = 0.05; % 变异概率
 gap_rate = 0.9; % 代沟(Generation gap)
 
 master_num = 4; % 主机数量
-worker_num = 100; % 工作节点数量
+worker_num = 200; % 工作节点数量
 
 % 初始化主节点（每个主节点）
 % master_task_list = [10000, 20000, 40000, 80000];
