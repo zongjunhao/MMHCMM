@@ -27,19 +27,28 @@ for itr = 1:max_itr
     for i = 1:pop_size
         plan_cost_list(i) = calc_plan_cost(master_task_list, plan_list(i, :), a, u);
     end
+    
+    fprintf('itr: %d, cost: %f \n', itr, min(plan_cost_list));
 
     fitness_list = 1 ./ plan_cost_list * 10000;
 
     % 3. 选择
-    selected_plan = ga_select(plan_list, fitness_list, gap_rate);
+    child_plan_list = ga_select(plan_list, fitness_list, gap_rate);
     % 4. 交叉操作
-    % SelCh = Recombin(SelCh, Pc);
+    child_plan_list = ga_cross(child_plan_list, cross_rate);
     % 5. 变异
-    % SelCh = Mutate(SelCh, Pm);
-    % %% 逆转操作
-    % SelCh = Reverse(SelCh, D);
-    % %% 重插入子代的新种群
-    % Chrom = Reins(Chrom, SelCh, ObjV);
+    child_plan_list = ga_mutate(child_plan_list, mutate_rate);
+    % 6. 逆转
+    child_plan_list = ga_reverse(child_plan_list, master_task_list, a, u);
+    % 7. 重插入子代的新种群
+    plan_list = ga_replace(plan_list, fitness_list, child_plan_list);
 end
+
+
+for i = 1:pop_size
+    plan_cost_list(i) = calc_plan_cost(master_task_list, plan_list(i, :), a, u);
+end
+
+fprintf('最短耗时: %f \n', min(plan_cost_list));
 
 toc
