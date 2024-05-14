@@ -48,6 +48,8 @@ cost = calc_plan_cost(master_task_list, plan, a, u);
 
 fprintf('4 cmp 用简单贪心选工作节点+负载分配HCMM 编码: %f \n', cost);
 
+toc
+
 % 获取计算耗时最长的主节点
 function max_master_index = get_max_master(master_task_list, plan, a, u)
     master_num = length(master_task_list);
