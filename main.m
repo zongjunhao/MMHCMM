@@ -10,14 +10,13 @@ cross_rate = 0.9; % 交叉概率
 mutate_rate = 0.05; % 变异概率
 gap_rate = 0.9; % 代沟(Generation gap)
 
-master_num = 2; % 主机数量
-worker_num = 5; % 工作节点数量
+master_num = 4; % 主机数量
+worker_num = 400; % 工作节点数量
 
 % 初始化主节点（每个主节点）
 % master_task_list = [10000];
-% master_task_list = [10000, 20000, 40000, 80000];
+master_task_list = [10000, 20000, 40000, 80000];
 % master_task_list = [10000, 10000, 10000, 10000];
-master_task_list = [20, 30];
 % 初始化工作节点
 [a, u] = init_worker(worker_num);
 % 1. 初始化种群
