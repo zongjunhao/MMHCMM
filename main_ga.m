@@ -14,11 +14,9 @@ master_num = 4; % 主机数量
 worker_num = 400; % 工作节点数量
 
 % 初始化主节点（每个主节点）
-% master_task_list = [10000];
-master_task_list = [10000, 20000, 40000, 80000];
-% master_task_list = [10000, 10000, 10000, 10000];
+[L, S, s, R] = init_master(master_num);
 % 初始化工作节点
-[a, u] = init_worker(worker_num);
+[a, u, r] = init_worker(worker_num);
 % 1. 初始化种群
 plan_list = ga_init_pop(pop_size, master_num, worker_num);
 
@@ -27,9 +25,9 @@ for itr = 1:max_itr
     plan_cost_list = zeros(pop_size, 1);
 
     for i = 1:pop_size
-        plan_cost_list(i) = calc_plan_cost(master_task_list, plan_list(i, :), a, u);
+        plan_cost_list(i) = calc_plan_cost(plan_list(i, :), L, S, s, R, a, u, r);
     end
-    
+
     fprintf('itr: %d, cost: %f \n', itr, min(plan_cost_list));
 
     fitness_list = 1 ./ plan_cost_list * 10000;
@@ -41,14 +39,13 @@ for itr = 1:max_itr
     % 5. 变异
     child_plan_list = ga_mutate(child_plan_list, mutate_rate);
     % 6. 逆转
-    child_plan_list = ga_reverse(child_plan_list, master_task_list, a, u);
+    child_plan_list = ga_reverse(child_plan_list, L, S, s, R, a, u, r);
     % 7. 重插入子代的新种群
     plan_list = ga_replace(plan_list, fitness_list, child_plan_list);
 end
 
-
 for i = 1:pop_size
-    plan_cost_list(i) = calc_plan_cost(master_task_list, plan_list(i, :), a, u);
+    plan_cost_list(i) = calc_plan_cost(plan_list(i, :), L, S, s, R, a, u, r);
 end
 
 fprintf('最短耗时: %f \n', min(plan_cost_list));

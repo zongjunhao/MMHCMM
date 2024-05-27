@@ -1,7 +1,7 @@
 % HCMM算法，给定工作节点和任务，计算所需时间
 % 说明：只获取时间消耗cost的情况下，如需要具体的节点任务分配 l 信息，可打开注释
-% @param: task_num: int，任务量（行）
 % @param: worker_num: int，工作节点数量
+% @param: task_num: int，任务量（行）
 % @param: S: int，每行计算前大小
 % @param: s: int，每行计算后大小
 % @param: R: float，主节点任务下发时间
@@ -9,11 +9,11 @@
 % @param: u: [worker_num]，工作节点的u值
 % @param: r: [worker_num]，工作节点的r值
 % @return: cost: float，所需时间
-function cost = hcmm(task_num, worker_num, S, s, R, a, u, r)
+function cost = hcmm(worker_num, task_num, S, s, R, a, u, r)
     % Tmax = 1000;
     % t = Tmax;
 
-    lam = zeros(worker_num, 1);
+    lam = zeros(1, worker_num);
     % l_star_t = zeros(worker_num, 1);
     % l_star_t_star = zeros(worker_num, 1);
 
