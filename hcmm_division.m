@@ -1,10 +1,10 @@
-function [z] = hcmm_division(fun, a, u, x, A, B)
+function [z] = hcmm_division(fun, S, s, R, a, u, r, x, A, B)
     p = -1;
 
-    while (fun(a, u, A) * fun(a, u, B) <= 0) && (abs(A - B) > x)
+    while (fun(S, s, R, a, u, r, A) * fun(S, s, R, a, u, r, B) <= 0) && (abs(A - B) > x)
         c = (A + B) / 2;
 
-        if fun(a, u, c) * fun(a, u, B) <= 0
+        if fun(S, s, R, a, u, r, c) * fun(S, s, R, a, u, r, B) <= 0
             A = c;
             p = p + 1;
         else

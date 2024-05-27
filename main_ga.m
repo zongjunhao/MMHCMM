@@ -20,7 +20,7 @@ master_task_list = [10000, 20000, 40000, 80000];
 % 初始化工作节点
 [a, u] = init_worker(worker_num);
 % 1. 初始化种群
-plan_list = init_pop(pop_size, master_num, worker_num);
+plan_list = ga_init_pop(pop_size, master_num, worker_num);
 
 for itr = 1:max_itr
     % 2. 计算适应度（时间花费的倒数）

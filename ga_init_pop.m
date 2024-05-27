@@ -3,7 +3,7 @@
 % @param: master_num: 主机数量
 % @param: worker_num: 工作节点数量
 % @return: pop_list: [pop_size, worker_num]，每一行代表一种分配方案
-function pop_list = init_pop(pop_size, master_num, worker_num)
+function pop_list = ga_init_pop(pop_size, master_num, worker_num)
     pop_list = zeros(pop_size, worker_num);
     for i = 1:pop_size
         % 随机生成主机分配方案
