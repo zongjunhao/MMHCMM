@@ -5,7 +5,7 @@ close all
 tic
 
 pop_size = 100; % 种群大小
-max_itr = 200; % 迭代轮次
+max_itr = 500; % 迭代轮次
 cross_rate = 0.9; % 交叉概率
 mutate_rate = 0.05; % 变异概率
 gap_rate = 0.9; % 代沟(Generation gap)

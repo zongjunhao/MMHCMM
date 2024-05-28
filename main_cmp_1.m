@@ -9,22 +9,12 @@ close all
 tic
 
 master_num = 2; % 主机数量
-worker_num = 5; % 工作节点数量
+worker_num = 6; % 工作节点数量
 
 % 初始化主节点（每个主节点）
-% master_task_list = [10000];
-% master_task_list = [10000, 20000, 40000, 80000];
-% master_task_list = [10000, 10000, 10000, 10000];
-master_task_list = [200, 300];
+[L, S, s, R] = init_master(master_num);
 % 初始化工作节点
-[a, u] = init_worker(worker_num);
-
-% 子节点计算时间
-worker_cost = zeros(worker_num, 1);
-
-for i = 1:worker_num
-    worker_cost(i) = 1 / u(i) + a(i);
-end
+[a, u, r] = init_worker(worker_num);
 
 plan_num = master_num ^ worker_num;
 min_cost = inf;
@@ -37,13 +27,17 @@ for plan_index = 1:plan_num
     for worker_index = 1:worker_num
         plan(worker_index) = mod(floor((plan_index - 1) / master_num ^ (worker_index - 1)), master_num) + 1;
     end
+
     disp(plan)
 
     plan_cost = 0;
     % 对每个主节点计算耗时 master_cost，取最长耗时最为该 plan 耗时
     for master_index = 1:master_num
         fprintf("Plan %d, master %d start\n", plan_index, master_index)
-        task_num = master_task_list(master_index);
+        master_L = L(master_index);
+        master_S = S(master_index);
+        master_s = s(master_index);
+        master_R = R(master_index);
         worker_index_list = find(plan == master_index);
         worker_num_of_master = length(worker_index_list);
 
@@ -57,10 +51,14 @@ for plan_index = 1:plan_num
         worker_cost_list = zeros(worker_num_of_master, 1);
 
         for i = 1:worker_num_of_master
-            worker_cost_list(i) = worker_cost(worker_index_list(i));
+            worker_index = worker_index_list(i);
+            worker_a = a(worker_index);
+            worker_u = u(worker_index);
+            worker_r = r(worker_index);
+            worker_cost_list(i) = 1 / worker_u + worker_a + master_S / master_R + master_s / worker_r;
         end
 
-        master_cost = get_master_cost(task_num, worker_cost_list);
+        master_cost = get_master_cost(master_L, worker_cost_list);
 
         plan_cost = max(plan_cost, master_cost);
 

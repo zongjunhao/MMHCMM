@@ -20,8 +20,8 @@ if __name__ == "__main__":
 
     print(result_array)
 
-    print(','.join(map(str, result_array)))
+    print(",".join(map(str, result_array)))
 
     # 手动保存为文本文件
-    with open('./utils/plan_equal_distribute.txt', 'w') as f:
-        f.write(','.join(map(str, result_array)))
+    with open("./utils/plan_equal_distribute.txt", "w") as f:
+        f.write(",".join(map(str, result_array)))
