@@ -5,8 +5,8 @@ clc
 close all
 tic
 
-master_num = 2; % 主机数量
-worker_num = 6; % 工作节点数量
+master_num = 4; % 主机数量
+worker_num = 400; % 工作节点数量
 
 % 初始化主节点（每个主节点）
 [L, S, s, R] = init_master(master_num);
